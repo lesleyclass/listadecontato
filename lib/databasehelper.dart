@@ -48,7 +48,7 @@ class DatabaseHelper {
   }
 
   Future<List<Contact>> getContacts() async {
-    Database db = await database;
+    Database db = await instance.database;
     List<Map<String, dynamic>> maps = await db.query(_table);
 
     return List.generate(maps.length, (i) {

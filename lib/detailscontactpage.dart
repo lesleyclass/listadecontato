@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'EditContactPage.dart';
+import 'editcontactpage.dart';
 import 'contact.dart';
 
 class DetailsContactPage extends StatefulWidget {
@@ -19,7 +19,8 @@ class _DetailsContactPageState extends State<DetailsContactPage> {
   }
 
   Future<void> _updateListContact() async {
-    widget.updateListContact;
+    widget.updateListContact();
+    Navigator.pop(context);
   }
 
   @override
@@ -42,7 +43,29 @@ class _DetailsContactPageState extends State<DetailsContactPage> {
           ),
           IconButton(
             icon: Icon(Icons.delete),
-            onPressed: _deleteContact,
+            onPressed: () async {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Confirmar exclusão'),
+                    content: Text('Tem certeza que deseja excluir este contato?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Cancelar'),
+                      ),
+                      TextButton(
+                        onPressed: _deleteContact,
+                        child: Text('Excluir'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
           ),
         ],
       ),

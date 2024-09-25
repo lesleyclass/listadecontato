@@ -81,7 +81,30 @@ class _ListContactsPageState extends State<ListContactsPage> {
                 IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () async {
-                    await _deleteContact(_contacts[index]);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Confirmar exclusão'),
+                          content: Text('Tem certeza que deseja excluir este contato?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('Cancelar'),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                Navigator.pop(context);
+                                await _deleteContact(_contacts[index]);
+                              },
+                              child: Text('Excluir'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                 ),
               ],
