@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'addcontactspage.dart';
 import 'contact.dart';
-import 'databasehelper.dart'; // Importe a tela de adicionar contato
+import 'databasehelper.dart';
+import 'detailscontactpage.dart'; // Importe a tela de adicionar contato
 
 void main() {
   runApp(MyApp());
@@ -51,7 +52,15 @@ class _ListContactsPageState extends State<ListContactsPage> {
           return ListTile(
             title: Text(_contacts[index].name),
             subtitle: Text(_contacts[index].phone),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DetailsContactPage(
+                  contact: _contacts[index],
+                  deleteContact: _deleteContact,
+                )),
+              );
+            },
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
