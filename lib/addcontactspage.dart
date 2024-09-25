@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:listadecontato/databasehelper.dart';
+
 import 'contact.dart';
 
 class AddContactsPage extends StatefulWidget {
+  late final Function updateListContact;
+  AddContactsPage({required this.updateListContact});
 
   @override
   _AddContactsPageState createState() => _AddContactsPageState();
@@ -80,7 +84,7 @@ class _AddContactsPageState extends State<AddContactsPage> {
         email: _emailController.text.toString(),
       );
 
-      // Chamar DatabaseHelper;
+      await DatabaseHelper.instance.insertContact(newContact);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -91,6 +95,7 @@ class _AddContactsPageState extends State<AddContactsPage> {
       _nameController.clear();
       _phoneController.clear();
       _emailController.clear();
+      widget.updateListContact();
     }
   }
 }
