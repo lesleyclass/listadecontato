@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'EditContactPage.dart';
 import 'addcontactspage.dart';
 import 'contact.dart';
 import 'databasehelper.dart';
@@ -58,6 +59,7 @@ class _ListContactsPageState extends State<ListContactsPage> {
                 MaterialPageRoute(builder: (context) => DetailsContactPage(
                   contact: _contacts[index],
                   deleteContact: _deleteContact,
+                  updateListContact: _getContacts,
                 )),
               );
             },
@@ -66,12 +68,20 @@ class _ListContactsPageState extends State<ListContactsPage> {
               children: [
                 IconButton(
                   icon: Icon(Icons.edit),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EditContactPage(
+                        contact: _contacts[index],
+                        updateListContact: _getContacts,
+                      )),
+                    );
+                  },
                 ),
                 IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () async {
-                    _deleteContact(_contacts[index]);
+                    await _deleteContact(_contacts[index]);
                   },
                 ),
               ],

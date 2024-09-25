@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'EditContactPage.dart';
 import 'contact.dart';
 
 class DetailsContactPage extends StatefulWidget {
   final Contact contact;
   final Function deleteContact;
-  DetailsContactPage({required this.contact, required this.deleteContact});
+  final Function updateListContact;
+  DetailsContactPage({required this.contact, required this.deleteContact, required this.updateListContact});
 
   @override
   _DetailsContactPageState createState() => _DetailsContactPageState();
@@ -16,6 +18,10 @@ class _DetailsContactPageState extends State<DetailsContactPage> {
     Navigator.pop(context);
   }
 
+  Future<void> _updateListContact() async {
+    widget.updateListContact;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,11 +29,19 @@ class _DetailsContactPageState extends State<DetailsContactPage> {
         title: Text(widget.contact.name),
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {},
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EditContactPage(
+                  contact: widget.contact,
+                  updateListContact: _updateListContact,
+                )),
+              );
+            },
           ),
           IconButton(
-            icon: const Icon(Icons.delete),
+            icon: Icon(Icons.delete),
             onPressed: _deleteContact,
           ),
         ],
